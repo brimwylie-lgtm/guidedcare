@@ -1,0 +1,192 @@
+---
+import { getEntry, getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+import CallToAction from "../components/CallToAction.astro";
+import { formatPrice, priceNote } from "../site.config";
+
+const page = await getEntry("pages", "home");
+if (!page) throw new Error("Missing src/content/pages/home.md");
+const { Content: Story } = await render(page);
+const p = page.data;
+
+const services = await getCollection("services");
+const byId = Object.fromEntries(services.map((s) => [s.id, s.data]));
+const roadmap = byId["roadmap"];
+const navigation = byId["navigation"];
+
+const steps = [
+  {
+    title: "Free fit call",
+    price: "Free, 15 minutes",
+    text: "Tell me the short version. I'll suggest one path, including free services if they fit better.",
+  },
+  {
+    title: "Roadmap",
+    price: formatPrice(roadmap.price),
+    text: "A 90-minute session and a written plan: your options, who decides, costs, and the next 30 days.",
+  },
+  {
+    title: "Navigation, if you want a hand",
+    price: formatPrice(navigation.price),
+    text: "I act as your single point of contact through one transition, such as a discharge or a move.",
+  },
+];
+---
+
+<BaseLayout title={p.title} description={p.description} schema>
+  <section class="hero section" aria-labelledby="hero-heading">
+    <div class="container">
+      <h1 id="hero-heading">{p.heading}</h1>
+      <p class="lead">{p.intro}</p>
+      <div class="btn-row">
+        <a href="/book/" class="btn btn-primary">Book a free 15-minute fit call</a>
+        <a href="/services/" class="btn btn-secondary">See services and prices</a>
+      </div>
+      <p class="small muted reassure">No cost, no obligation. Independent: families pay me directly, and I take no referral fees.</p>
+    </div>
+  </section>
+
+  {
+    p.situations && (
+      <section class="section band-sand" aria-labelledby="situations-heading">
+        <div class="container">
+          <h2 id="situations-heading">{p.situationsHeading}</h2>
+          <ul class="situations">
+            {p.situations.map((s) => (
+              <li>{s}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" aria-labelledby="how-heading">
+    <div class="container">
+      <h2 id="how-heading">How it works</h2>
+      <ol class="steps">
+        {
+          steps.map((step, i) => (
+            <li class="card">
+              <span class="step-num" aria-hidden="true">{i + 1}</span>
+              <h3>{step.title}</h3>
+              <p class="step-price">{step.price}</p>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section band-mist" aria-labelledby="roadmap-heading">
+    <div class="container roadmap-grid">
+      <div>
+        <p class="eyebrow">Where most families start</p>
+        <h2 id="roadmap-heading">The Roadmap</h2>
+        <p class="lead">{roadmap.summary}</p>
+        <p class="roadmap-price">{formatPrice(roadmap.price)} <span class="small muted">{priceNote}</span></p>
+      </div>
+      <div class="card">
+        <h3>What's included</h3>
+        <ul class="checklist">
+          {roadmap.includes.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="small muted">The Roadmap is complete on its own. Many families carry it out themselves.</p>
+        <a href="/book/" class="btn btn-primary">Start with a free fit call</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="story-heading">
+    <div class="container story-grid">
+      <div class="prose">
+        <h2 id="story-heading">{p.storyHeading}</h2>
+        <Story />
+        <p><a href="/about/">More about me and how I work</a></p>
+      </div>
+      <ImagePlaceholder alt="Photo of Brian, founder of GuidedCare" label="Photo of Brian (placeholder)" ratio="4 / 5" />
+    </div>
+  </section>
+
+  <section class="section band-sand" aria-labelledby="free-heading">
+    <div class="container"><div class="prose">
+      <h2 id="free-heading">{p.freeServicesHeading}</h2>
+      <p>{p.freeServicesText}</p>
+      <p><a href="/free-help/">See free services in Halton</a></p>
+    </div></div>
+  </section>
+
+  <CallToAction />
+</BaseLayout>
+
+<style>
+  .hero { padding-block: var(--space-5) var(--space-5); }
+  .hero h1 { max-width: 20ch; }
+  .reassure { margin-top: var(--space-2); max-width: 50ch; }
+
+  .situations {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 48rem) {
+    .situations { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem 2rem; }
+  }
+  .situations li {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border-left: 4px solid var(--clay);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .steps {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    counter-reset: none;
+  }
+  @media (min-width: 48rem) {
+    .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  .steps li { margin: 0; position: relative; }
+  .steps h3 { margin-top: var(--space-1); }
+  .step-num {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--harbour);
+    color: #fff;
+    font-weight: 700;
+  }
+  .step-price { font-weight: 700; color: var(--clay); }
+
+  .eyebrow {
+    font-weight: 700;
+    color: var(--harbour);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--step--1);
+    margin-bottom: var(--space-1);
+  }
+  #roadmap-heading { margin-top: 0; }
+  .roadmap-grid, .story-grid { display: grid; gap: var(--space-4); align-items: start; }
+  @media (min-width: 56rem) {
+    .roadmap-grid { grid-template-columns: 1fr 1fr; }
+    .story-grid { grid-template-columns: 3fr 2fr; }
+  }
+  .roadmap-price {
+    font-family: var(--font-heading);
+    font-size: var(--step-2);
+    font-weight: 700;
+    color: var(--clay);
+  }
+  .roadmap-price .small { font-family: var(--font-body); font-weight: 400; display: block; }
+  .card h3 { margin-top: 0; }
+</style>

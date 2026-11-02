@@ -1,0 +1,80 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BookingEmbed from "../components/BookingEmbed.astro";
+import { site } from "../site.config";
+
+const page = await getEntry("pages", "book");
+if (!page) throw new Error("Missing src/content/pages/book.md");
+const p = page.data;
+---
+
+<BaseLayout title={p.title} description={p.description}>
+  <section class="section">
+    <div class="container">
+      <div class="prose">
+        <h1>{p.heading}</h1>
+        <p class="lead">{p.intro}</p>
+        <div class="callout callout-alert" role="note">
+          <p>
+            <strong>If someone is in danger right now, call 911.</strong> For urgent home care needs, call Ontario Health
+            atHome at <a href="tel:+18335151234">1-833-515-1234</a>. GuidedCare is not an emergency service.
+          </p>
+        </div>
+      </div>
+
+      <div class="book-grid">
+        <div>
+          <BookingEmbed />
+        </div>
+        <div class="prose">
+          {
+            p.beforeCall && (
+              <>
+                <h2>When you book, I'll ask three short questions</h2>
+                <ul class="checklist">
+                  {p.beforeCall.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+                <p class="small muted">
+                  Please don't include your parent's name or health details. The general situation is all I need.
+                </p>
+              </>
+            )
+          }
+
+          {
+            p.afterCall && (
+              <>
+                <h2>What happens next</h2>
+                <ol class="next">
+                  {p.afterCall.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ol>
+              </>
+            )
+          }
+
+          <h2>A quick note on scope</h2>
+          <p class="small">{site.scopeShort}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .book-grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    align-items: start;
+  }
+  @media (min-width: 56rem) {
+    .book-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .book-grid h2:first-child { margin-top: 0; }
+  .next { padding-left: 1.4rem; }
+</style>

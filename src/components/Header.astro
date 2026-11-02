@@ -1,0 +1,89 @@
+---
+import Wordmark from "./Wordmark.astro";
+
+const links = [
+  { href: "/services/", label: "Services and prices" },
+  { href: "/about/", label: "About" },
+  { href: "/free-help/", label: "Free help" },
+];
+const path = Astro.url.pathname.replace(/\/?$/, "/");
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label="GuidedCare home">
+      <Wordmark />
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} aria-current={path === link.href ? "page" : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href="/book/" class="btn btn-primary nav-cta" aria-current={path === "/book/" ? "page" : undefined}>
+            Book a free call
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding-block: 0.9rem;
+  }
+  .brand {
+    text-decoration: none;
+    display: inline-flex;
+    min-height: var(--tap);
+    align-items: center;
+  }
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1.1rem;
+  }
+  nav li + li { margin-top: 0; }
+  nav a:not(.btn) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  nav a:not(.btn):hover { text-decoration: underline; }
+  nav a:not(.btn)[aria-current="page"] {
+    color: var(--harbour);
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.35em;
+  }
+  .nav-cta { padding-inline: 1.1rem; }
+  @media (max-width: 40rem) {
+    nav { width: 100%; }
+    nav ul { gap: 0 1rem; }
+    nav li:last-child { width: 100%; }
+    .nav-cta { width: 100%; margin-top: 0.25rem; }
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+// Stand-in for a real photo. Replace with:
+//   <img src="/images/your-photo.jpg" alt="..." width="800" height="1000" loading="lazy" />
+// Keep the alt text meaningful. No stock photos of smiling seniors.
+interface Props {
+  alt: string;
+  label?: string;
+  ratio?: string; // CSS aspect-ratio, e.g. "4 / 5"
+}
+const { alt, label = "Photo placeholder", ratio = "4 / 3" } = Astro.props;
+---
+
+<div class="placeholder" role="img" aria-label={alt} style={`aspect-ratio: ${ratio}`}>
+  <span aria-hidden="true">{label}</span>
+</div>
+
+<style>
+  .placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    background:
+      repeating-linear-gradient(45deg, var(--sand), var(--sand) 12px, var(--paper) 12px, var(--paper) 24px);
+    border: 2px dashed var(--line);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    text-align: center;
+    padding: 1rem;
+  }
+</style>

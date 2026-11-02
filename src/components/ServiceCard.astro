@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatPrice } from "../site.config";
+
+interface Props {
+  service: CollectionEntry<"services">;
+  headingLevel?: "h2" | "h3";
+}
+const { service, headingLevel = "h3" } = Astro.props;
+const s = service.data;
+const Heading = headingLevel;
+---
+
+<section class:list={["card", "service", { "card-featured": s.featured }]} id={service.id} aria-labelledby={`${service.id}-name`}>
+  {s.featured && <p class="tag">Where most families start</p>}
+  <Heading id={`${service.id}-name`} class="name">{s.name}</Heading>
+  <p class="price">{formatPrice(s.price, s.priceSuffix)}</p>
+  <p>{s.summary}</p>
+  <ul class="checklist" aria-label="What is included">
+    {s.includes.map((item) => <li>{item}</li>)}
+  </ul>
+  <dl class="meta">
+    <div><dt>Time</dt><dd>{s.timeCap}</dd></div>
+    <div><dt>Length</dt><dd>{s.duration}</dd></div>
+  </dl>
+  {s.note && <p class="note small">{s.note}</p>}
+</section>
+
+<style>
+  .service { display: flex; flex-direction: column; }
+  .name { margin-top: 0; margin-bottom: 0.25rem; }
+  .tag {
+    align-self: flex-start;
+    background: var(--harbour);
+    color: #fff;
+    font-size: var(--step--1);
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: var(--space-2);
+  }
+  .price {
+    font-family: var(--font-heading);
+    font-size: var(--step-2);
+    font-weight: 700;
+    color: var(--clay);
+    margin-bottom: var(--space-2);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin-top: auto;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+  }
+  .meta dt { font-size: var(--step--1); color: var(--ink-soft); }
+  .meta dd { margin: 0; font-weight: 700; }
+  .note { color: var(--ink-soft); margin-top: var(--space-2); }
+</style>

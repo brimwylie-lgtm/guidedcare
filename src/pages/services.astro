@@ -1,0 +1,93 @@
+---
+import { getEntry, getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import CallToAction from "../components/CallToAction.astro";
+import { priceNote, site } from "../site.config";
+
+const page = await getEntry("pages", "services");
+if (!page) throw new Error("Missing src/content/pages/services.md");
+const p = page.data;
+
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const main = services.filter((s) => ["fit-call", "roadmap", "navigation"].includes(s.id));
+const more = services.filter((s) => !["fit-call", "roadmap", "navigation"].includes(s.id));
+---
+
+<BaseLayout title={p.title} description={p.description}>
+  <section class="section">
+    <div class="container">
+      <h1>{p.heading}</h1>
+      <p class="lead">{p.intro}</p>
+      <p class="muted">{priceNote}</p>
+
+      <h2 class="visually-hidden">Main services</h2>
+      <div class="grid grid-3 cards">
+        {main.map((s) => <ServiceCard service={s} />)}
+      </div>
+
+      <h2>Other services</h2>
+      <div class="grid grid-3 cards">
+        {more.map((s) => <ServiceCard service={s} />)}
+      </div>
+    </div>
+  </section>
+
+  {
+    p.navigationScenarios && (
+      <section class="section band-mist" aria-labelledby="nav-heading">
+        <div class="container">
+          <h2 id="nav-heading">What Navigation looks like</h2>
+          <p class="prose">
+            Each Navigation package covers one transition. A second transition, for example a retirement home move after a
+            hospital discharge, is a new package.
+          </p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Situation</th>
+                <th scope="col">Typical work inside the 15 hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              {p.navigationScenarios.map((row) => (
+                <tr>
+                  <td>{row.scenario}</td>
+                  <td>{row.work}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" aria-labelledby="payment-heading">
+    <div class="container grid grid-2">
+      <div>
+        <h2 id="payment-heading">How booking and payment work</h2>
+        <p>{p.paymentText}</p>
+        <p>Hours: {site.hours}.</p>
+      </div>
+      {
+        p.notIncluded && (
+          <div>
+            <h2>What's not included in any service</h2>
+            <ul class="xlist">
+              {p.notIncluded.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <CallToAction heading="Start with a free fit call" />
+</BaseLayout>
+
+<style>
+  .cards { margin-top: var(--space-3); }
+</style>

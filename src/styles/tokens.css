@@ -1,0 +1,64 @@
+/*
+  GuidedCare design tokens.
+  Contrast ratios checked against WCAG 2.1 AA (4.5:1 for text, 3:1 for large text and UI):
+    ink on paper            13.8:1
+    ink-soft on paper        7.2:1
+    harbour on paper         8.1:1   (links, headings)
+    white on harbour         8.6:1   (dark sections)
+    white on clay            6.0:1   (primary buttons)
+    harbour on mist          7.3:1
+    paper on harbour-deep   10.6:1   (footer)
+    peach on harbour-deep    7.4:1   (footer focus ring and links)
+*/
+
+:root {
+  /* Colour */
+  --paper: #fbf8f3;        /* warm off-white page background */
+  --surface: #ffffff;      /* cards */
+  --sand: #f3ece1;         /* warm section band */
+  --mist: #e6efec;         /* cool section band */
+  --line: #ddd5c8;         /* borders */
+
+  --ink: #1f2a33;          /* body text */
+  --ink-soft: #4a5560;     /* secondary text */
+
+  --harbour: #1d5266;      /* primary: deep teal-blue */
+  --harbour-deep: #183f4f; /* footer, dark bands */
+  --clay: #a3471f;         /* accent: calls to action */
+  --clay-dark: #8a3a18;    /* button hover */
+  --peach: #f2c9a8;        /* accent on dark backgrounds */
+
+  --focus: #a3471f;
+
+  /* Type */
+  --font-body: "Source Sans 3 Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+
+  --step--1: 1rem;                                   /* 16px small print */
+  --step-0: 1.125rem;                                /* 18px body (mobile) */
+  --step-1: clamp(1.3rem, 1.2rem + 0.4vw, 1.45rem);  /* h3 */
+  --step-2: clamp(1.6rem, 1.4rem + 0.9vw, 2rem);     /* h2 */
+  --step-3: clamp(2rem, 1.6rem + 1.9vw, 2.9rem);     /* h1 */
+
+  --leading: 1.6;
+  --leading-tight: 1.2;
+  --measure: 66ch;
+
+  /* Space */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4.5rem;
+
+  --radius: 10px;
+  --container: 72rem;
+  --tap: 48px;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --step-0: 1.1875rem; /* 19px body on larger screens */
+  }
+}

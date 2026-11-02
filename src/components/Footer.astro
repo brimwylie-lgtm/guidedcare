@@ -1,0 +1,82 @@
+---
+import Wordmark from "./Wordmark.astro";
+import { site } from "../site.config";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="emergency" role="note">
+      <strong>Not an emergency service.</strong> In an emergency call 911.
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <Wordmark inverse />
+        <p class="scope">{site.scopeShort}</p>
+        <p class="small">
+          GuidedCare is an independent business. It is not affiliated with Halton Region, Ontario Health atHome or any
+          care provider.
+        </p>
+      </div>
+      <div>
+        <h2 class="footer-heading">Contact</h2>
+        <p>
+          {site.owner.name}<br />
+          <a href={`mailto:${site.owner.email}`}>{site.owner.email}</a>
+        </p>
+        <p class="small">{site.hours}<br />Serving {site.serviceArea.join(", ")}</p>
+        <ul class="footer-links">
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li><a href="/terms/">Terms and scope</a></li>
+          <li><a href="/free-help/">Free services in Halton</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="small copyright">&copy; {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--harbour-deep);
+    color: var(--paper);
+    padding-block: var(--space-4) var(--space-3);
+    margin-top: var(--space-5);
+  }
+  .site-footer a { color: var(--peach); }
+  .site-footer :focus-visible { outline-color: var(--peach); }
+  .emergency {
+    border: 2px solid var(--peach);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    margin-bottom: var(--space-4);
+    font-size: 1.15em;
+  }
+  .footer-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+  @media (min-width: 48rem) {
+    .footer-grid { grid-template-columns: 2fr 1fr; }
+  }
+  .scope { margin-top: var(--space-2); max-width: 60ch; }
+  .footer-heading {
+    color: var(--paper);
+    font-size: var(--step-1);
+    margin-top: 0;
+  }
+  .footer-links { list-style: none; padding: 0; }
+  .footer-links a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+  .footer-links li + li { margin-top: 0; }
+  .copyright {
+    margin: var(--space-4) 0 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid rgba(251, 248, 243, 0.25);
+  }
+</style>

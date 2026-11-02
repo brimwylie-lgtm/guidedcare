@@ -1,0 +1,23 @@
+---
+interface Props {
+  heading?: string;
+  text?: string;
+}
+const {
+  heading = "Not sure where to start?",
+  text = "Book a free 15-minute fit call. Tell me the short version of what's happening, and I'll tell you honestly whether I can help or whether a free service is the better fit.",
+} = Astro.props;
+---
+
+<section class="section band-mist" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="prose">
+      <h2 id="cta-heading">{heading}</h2>
+      <p>{text}</p>
+      <div class="btn-row">
+        <a href="/book/" class="btn btn-primary">Book a free 15-minute fit call</a>
+        <a href="/free-help/">See free services in Halton</a>
+      </div>
+    </div>
+  </div>
+</section>

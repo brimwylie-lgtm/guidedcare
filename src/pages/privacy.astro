@@ -1,0 +1,13 @@
+---
+import { getEntry, render } from "astro:content";
+import ProseLayout from "../layouts/ProseLayout.astro";
+
+const entry = await getEntry("legal", "privacy");
+if (!entry) throw new Error("Missing src/content/legal/privacy.md");
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<ProseLayout title={d.title} description={d.description} updated={d.updated} draft={d.draft}>
+  <Content />
+</ProseLayout>

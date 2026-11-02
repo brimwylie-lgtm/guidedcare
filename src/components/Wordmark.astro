@@ -1,0 +1,26 @@
+---
+// Text wordmark until there is a logo. "Guided" in the heading serif, "Care" in clay.
+interface Props {
+  inverse?: boolean;
+}
+const { inverse = false } = Astro.props;
+---
+
+<span class:list={["wordmark", { inverse }]}>
+  <span class="guided">Guided</span><span class="care">Care</span>
+</span>
+
+<style>
+  .wordmark {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .guided { color: var(--harbour-deep); }
+  .care { color: var(--clay); font-weight: 700; }
+  .inverse .guided { color: var(--paper); }
+  .inverse .care { color: var(--peach); }
+</style>

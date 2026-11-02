@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"freeServices"> | CollectionEntry<"directory">;
+}
+const { entry } = Astro.props;
+const d = entry.data;
+const verified = d.lastVerified.toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+const host = new URL(d.url).hostname.replace(/^www\./, "");
+---
+
+<section class="card listing" aria-labelledby={`${entry.id}-name`}>
+  <h3 id={`${entry.id}-name`}>{d.name}</h3>
+  <p>{d.summary}</p>
+  {
+    d.phone && (
+      <p class="phone">
+        <a href={`tel:${d.phone}`}>{d.phoneDisplay ?? d.phone}</a>
+        {d.phoneAlt && <span class="small muted"> or {d.phoneAlt}</span>}
+      </p>
+    )
+  }
+  <dl class="facts">
+    {d.hours && <div><dt>Hours</dt><dd>{d.hours}</dd></div>}
+    <div><dt>Cost</dt><dd>{d.cost}</dd></div>
+    {d.referral && <div><dt>Referral</dt><dd>{d.referral}</dd></div>}
+    <div><dt>Website</dt><dd><a href={d.url} rel="noopener">{host}</a></dd></div>
+  </dl>
+  <p class="small muted verified">Checked {verified}. Please confirm with the organization before relying on it.</p>
+</section>
+
+<style>
+  .listing h3 { margin-top: 0; }
+  .phone { font-size: 1.25em; font-weight: 700; }
+  .phone a { display: inline-flex; min-height: var(--tap); align-items: center; }
+  .facts { display: grid; gap: 0.35rem; }
+  .facts div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.5rem; }
+  .facts dt { color: var(--ink-soft); }
+  .facts dd { margin: 0; }
+  .verified { margin-top: var(--space-2); }
+</style>

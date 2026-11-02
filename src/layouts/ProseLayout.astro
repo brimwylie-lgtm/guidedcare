@@ -1,0 +1,26 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import DraftBanner from "../components/DraftBanner.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  updated?: Date;
+  draft?: boolean;
+}
+const { title, description, updated, draft = false } = Astro.props;
+const updatedText = updated?.toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="section">
+    <div class="container">
+      <div class="prose">
+        {draft && <DraftBanner />}
+        <h1>{title}</h1>
+        {updatedText && <p class="muted small">Last updated {updatedText}</p>}
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

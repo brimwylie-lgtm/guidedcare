@@ -1,0 +1,92 @@
+---
+// Loads the Cal.com calendar only when the visitor asks for it.
+// Keeps the page fast and avoids third-party scripts until they are needed.
+import { site, calUrl, calReady } from "../site.config";
+---
+
+<div class="booking" data-cal-link={site.calLink}>
+  <div class="facade card" data-facade>
+    <h3>Pick a time for your fit call</h3>
+    <p>15 minutes by phone or video, {site.hours}.</p>
+    {
+      calReady ? (
+        <>
+          <button type="button" class="btn btn-primary" data-load-cal>
+            Show available times
+          </button>
+          <p class="small">
+            Or <a href={calUrl} target="_blank" rel="noopener">open the booking page in a new tab</a>.
+          </p>
+        </>
+      ) : (
+        <p class="callout callout-alert">Online booking is being set up. For now, email <a href={`mailto:${site.owner.email}`}>{site.owner.email}</a> to arrange a call.</p>
+      )
+    }
+  </div>
+  <div class="frame" data-cal-frame id="cal-inline" hidden></div>
+</div>
+
+<script is:inline>
+  (function () {
+    // Standard Cal.com embed loader, run only after the visitor clicks.
+    function loadCal(calLink, target) {
+      (function (C, A, L) {
+        var p = function (a, ar) { a.q.push(ar); };
+        var d = C.document;
+        C.Cal = C.Cal || function () {
+          var cal = C.Cal;
+          var ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            d.head.appendChild(d.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            var api = function () { p(api, arguments); };
+            var namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else p(cal, ar);
+            return;
+          }
+          p(cal, ar);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      window.Cal("init", { origin: "https://cal.com" });
+      window.Cal("inline", { elementOrSelector: target, calLink: calLink, layout: "month_view" });
+      window.Cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    }
+
+    document.querySelectorAll(".booking").forEach(function (root) {
+      var button = root.querySelector("[data-load-cal]");
+      var frame = root.querySelector("[data-cal-frame]");
+      var facade = root.querySelector("[data-facade]");
+      var calLink = root.getAttribute("data-cal-link");
+      if (!button || !frame || !facade || !calLink) return;
+      button.addEventListener("click", function () {
+        frame.hidden = false;
+        facade.hidden = true;
+        loadCal(calLink, "#" + frame.id);
+        frame.setAttribute("tabindex", "-1");
+        frame.focus();
+      });
+    });
+  })();
+</script>
+
+<style>
+  .facade h3 { margin-top: 0; }
+  .frame {
+    width: 100%;
+    min-height: 640px;
+    overflow: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+</style>

@@ -1,0 +1,221 @@
+---
+// Illustration of a Roadmap page, built in HTML and CSS (no image file).
+// Edit the sample text below freely. Keep it generic: no names, no health details,
+// and options are listed, never ranked or recommended.
+const options = [
+  "More support at home",
+  "Retirement home",
+  "Long-term care application",
+];
+const nextSteps = [
+  { text: "Call Ontario Health atHome about a home care assessment", done: true },
+  { text: "Find the power of attorney documents", done: true },
+  { text: "Family call: agree who leads on what", done: false },
+  { text: "Book tours at the homes you're considering", done: false },
+];
+---
+
+<figure class="preview">
+  <div class="stack" role="img" aria-label="Sample page from a GuidedCare Roadmap, showing sections for your options, who decides what, costs at a glance and your next 30 days.">
+    <div class="sheet sheet-back" aria-hidden="true"></div>
+    <div class="sheet sheet-front" aria-hidden="true">
+      <div class="doc-head">
+        <span class="doc-brand"><span class="g">Guided</span><span class="c">Care</span></span>
+        <span class="doc-label">Family Roadmap</span>
+      </div>
+      <p class="doc-for">Prepared for your family</p>
+
+      <div class="doc-section wide-only">
+        <p class="doc-h"><span class="num">1</span>Where things stand</p>
+        <span class="line w90"></span>
+        <span class="line w70"></span>
+      </div>
+
+      <div class="doc-section">
+        <p class="doc-h"><span class="num">2</span>Your options</p>
+        <ul class="opts">
+          {options.map((o) => <li>{o}</li>)}
+        </ul>
+      </div>
+
+      <div class="doc-section two-col wide-only">
+        <div>
+          <p class="doc-h"><span class="num">3</span>Who decides what</p>
+          <span class="line w80"></span>
+          <span class="line w60"></span>
+        </div>
+        <div>
+          <p class="doc-h"><span class="num">4</span>Costs at a glance</p>
+          <span class="bar b1"></span>
+          <span class="bar b2"></span>
+          <span class="bar b3"></span>
+        </div>
+      </div>
+
+      <div class="doc-section">
+        <p class="doc-h"><span class="num">5</span>Your next 30 days</p>
+        <ul class="todo">
+          {
+            nextSteps.map((s) => (
+              <li class:list={{ done: s.done }}>
+                <span class="box" />
+                {s.text}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  <figcaption>A sample Roadmap page. Every plan is written for your family.</figcaption>
+</figure>
+
+<style>
+  .preview { margin: 0; }
+  .stack {
+    position: relative;
+    max-width: 30rem;
+    margin-inline: auto;
+    padding: 0.75rem 0.75rem 0;
+  }
+  .sheet {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(31, 42, 51, 0.06), 0 12px 28px rgba(31, 42, 51, 0.1);
+  }
+  .sheet-back {
+    position: absolute;
+    inset: 0 1.5rem 1.25rem 1.5rem;
+    transform: rotate(3deg);
+    background: var(--sand);
+  }
+  .sheet-front {
+    position: relative;
+    transform: rotate(-1.2deg);
+    padding: 1.25rem 1.4rem 1.4rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .doc-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 3px solid var(--harbour);
+    padding-bottom: 0.5rem;
+  }
+  .doc-brand { font-family: var(--font-heading); font-weight: 700; font-size: 1.05rem; }
+  .doc-brand .g { color: var(--harbour-deep); }
+  .doc-brand .c { color: var(--clay); }
+  .doc-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .doc-for {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--harbour-deep);
+    margin: 0.6rem 0 0.2rem;
+  }
+
+  .doc-section { margin-top: 0.85rem; }
+  .doc-h {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 700;
+    color: var(--harbour-deep);
+    margin: 0 0 0.35rem;
+  }
+  .num {
+    display: inline-grid;
+    place-items: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    background: var(--harbour);
+    color: #fff;
+    font-size: 0.75rem;
+  }
+
+  .line, .bar {
+    display: block;
+    height: 0.5rem;
+    border-radius: 99px;
+    background: var(--line);
+    margin: 0.35rem 0;
+  }
+  .w90 { width: 90%; } .w80 { width: 80%; } .w70 { width: 70%; } .w60 { width: 60%; }
+  .bar { height: 0.6rem; background: var(--mist); }
+  .b1 { width: 45%; background: #c9dcd5; }
+  .b2 { width: 70%; background: #b3cdc4; }
+  .b3 { width: 90%; background: #9dbfb3; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .opts { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .opts li {
+    margin: 0;
+    padding: 0.15rem 0.6rem;
+    border: 1px solid var(--harbour);
+    border-radius: 99px;
+    font-size: 0.82rem;
+    color: var(--harbour-deep);
+    background: var(--paper);
+  }
+
+  .todo { list-style: none; padding: 0; margin: 0; }
+  .todo li {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    margin: 0.3rem 0 0;
+    font-size: 0.88rem;
+  }
+  .box {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.12rem;
+    border: 2px solid var(--harbour);
+    border-radius: 3px;
+    position: relative;
+  }
+  .done .box { background: var(--harbour); }
+  .done .box::after {
+    content: "";
+    position: absolute;
+    left: 0.24rem;
+    top: 0.05rem;
+    width: 0.25rem;
+    height: 0.5rem;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .done { color: var(--ink-soft); }
+
+  /* Small screens: show only Your options and Your next 30 days, to keep the hero short. */
+  @media (max-width: 40rem) {
+    .wide-only { display: none; }
+    .num { display: none; }
+  }
+
+  figcaption {
+    text-align: center;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    margin-top: 1rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sheet-front { transition: transform 0.3s ease; }
+    .stack:hover .sheet-front { transform: rotate(0deg); }
+  }
+</style>

@@ -3,6 +3,7 @@ import { getEntry, getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ImagePlaceholder from "../components/ImagePlaceholder.astro";
 import CallToAction from "../components/CallToAction.astro";
+import RoadmapPreview from "../components/RoadmapPreview.astro";
 import { formatPrice, priceNote } from "../site.config";
 
 const page = await getEntry("pages", "home");
@@ -36,14 +37,17 @@ const steps = [
 
 <BaseLayout title={p.title} description={p.description} schema>
   <section class="hero section" aria-labelledby="hero-heading">
-    <div class="container">
-      <h1 id="hero-heading">{p.heading}</h1>
-      <p class="lead">{p.intro}</p>
-      <div class="btn-row">
-        <a href="/book/" class="btn btn-primary">Book a free 15-minute fit call</a>
-        <a href="/services/" class="btn btn-secondary">See services and prices</a>
+    <div class="container hero-grid">
+      <div>
+        <h1 id="hero-heading">{p.heading}</h1>
+        <p class="lead">{p.intro}</p>
+        <div class="btn-row">
+          <a href="/book/" class="btn btn-primary">Book a free 15-minute fit call</a>
+          <a href="/services/" class="btn btn-secondary">See services and prices</a>
+        </div>
+        <p class="small muted reassure">No cost, no obligation. Independent: families pay us directly, and we take no referral fees.</p>
       </div>
-      <p class="small muted reassure">No cost, no obligation. Independent: families pay us directly, and we take no referral fees.</p>
+      <RoadmapPreview />
     </div>
   </section>
 
@@ -124,6 +128,10 @@ const steps = [
 <style>
   .hero { padding-block: var(--space-5) var(--space-5); }
   .hero h1 { max-width: 20ch; }
+  .hero-grid { display: grid; gap: var(--space-5); align-items: center; }
+  @media (min-width: 56rem) {
+    .hero-grid { grid-template-columns: 1.1fr 1fr; gap: var(--space-4); }
+  }
   .reassure { margin-top: var(--space-2); max-width: 50ch; }
 
   .situations {

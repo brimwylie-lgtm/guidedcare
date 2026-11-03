@@ -9,5 +9,5 @@ includes:
   - Written summary of decisions and owners within 3 business days
 timeCap: Up to 6 hours
 duration: Up to 21 days
-note: High-conflict disputes are better served by an elder mediator, and I'll help you find one.
+note: High-conflict disputes are better served by an elder mediator, and we'll help you find one.
 ---

@@ -3,7 +3,7 @@ title: Services and prices
 description: GuidedCare services and prices for Halton families, from a free 15-minute fit call to a written Roadmap, hands-on Navigation and a monthly retainer. What is and isn't included.
 heading: Services and prices
 intro: Every engagement starts with a free 15-minute fit call. Most families then choose a Roadmap. If you want someone to carry part of the work, Navigation picks up from there.
-paymentText: There's nothing to pay online. After your fit call, if we agree on a path, I send you an invoice. Once it's paid, we book your session. Work happens by phone, video or in person in Halton. Travel time within Halton counts toward package hours; work outside Halton is quoted in advance. I don't offer evening, weekend or emergency service.
+paymentText: There's nothing to pay online. After your fit call, if we agree on a path, we send you an invoice. Once it's paid, we book your session. Work happens by phone, video or in person in Halton. Travel time within Halton counts toward package hours; work outside Halton is quoted in advance. We don't offer evening, weekend or emergency service.
 navigationScenarios:
   - scenario: Hospital discharge
     work: Prepare you for the discharge meeting, contact the Ontario Health atHome care coordinator and hospital team, explain interim and alternate level of care (ALC) options, and line up the home support or short-stay option your family chooses.
@@ -20,9 +20,9 @@ notIncluded:
   - Ranking homes or saying which one is best
   - Medical, legal, tax or financial advice
   - Interpreting or drafting contracts or powers of attorney
-  - Mediating high-conflict disputes (I'll refer you to an elder mediator)
+  - Mediating high-conflict disputes (we'll refer you to an elder mediator)
   - Hands-on care, transporting your parent, packing or moving
   - Acting as substitute decision-maker or attorney
   - Emergency or after-hours availability
-  - Any payment from care providers. Families pay me directly.
+  - Any payment from care providers. Families pay us directly.
 ---

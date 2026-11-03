@@ -36,13 +36,13 @@ const listings = (await getCollection("freeServices")).sort((a, b) => a.data.ord
     <div class="container"><div class="prose">
       <h2 id="directory-heading">A Halton directory is coming</h2>
       <p>
-        I'm building a directory of senior services in {site.serviceArea.join(", ")}, organized by city and type of
-        service. Leave your email and I'll let you know when it's ready. One email, no spam.
+        We're building a directory of senior services in {site.serviceArea.join(", ")}, organized by city and type of
+        service. Leave your email and we'll let you know when it's ready. One email, no spam.
       </p>
       {
         signupReady ? (
           <a href={site.signupUrl} class="btn btn-primary" rel="noopener">
-            Tell me when it launches
+            Let me know when it launches
           </a>
         ) : (
           <p class="muted">Signup opening soon.</p>
@@ -56,7 +56,7 @@ const listings = (await getCollection("freeServices")).sort((a, b) => a.data.ord
       <h2 id="help-heading">Want help putting it together?</h2>
       <p>
         Free services are a great start. If you're facing a private decision, a hospital discharge or a family that
-        can't agree, a <a href="/book/">free 15-minute fit call</a> is the easiest way to see if I can help.
+        can't agree, a <a href="/book/">free 15-minute fit call</a> is the easiest way to see if we can help.
       </p>
     </div></div>
   </section>

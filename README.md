@@ -26,7 +26,7 @@ Note: Vercel's free Hobby plan is for non-commercial use. It is fine while this 
 
 | To change | Edit |
 | --- | --- |
-| Domain, preview mode, email, hours, HST note, Cal.com link, signup link | `src/site.config.ts` |
+| Domain, preview mode, email, hours, HST note, Tally form ID, reply time, signup link | `src/site.config.ts` |
 | Prices and what each service includes | `src/content/services/*.md` |
 | Home, Services, About, Book, Free help copy | `src/content/pages/*.md` |
 | Free services listed on Free help | `src/content/free-services/*.md` |
@@ -60,22 +60,22 @@ While `indexable: false` in `site.config.ts`:
 
 Set `indexable: true` only when the real domain is live.
 
-## Cal.com setup for the fit call (minimum to make the Book page work)
+## Tally fit call form (Book page)
 
-1. Sign up at cal.com (free plan). Choose a username, for example `guidedcare`.
-2. Connect your calendar so booked times are blocked.
-3. Availability: Monday to Friday, 9 am to 5 pm, America/Toronto.
-4. Create an event type: "Free 15-minute fit call", 15 minutes, slug `fit-call`.
-   - Location: phone call and/or Cal Video (or Google Meet / Zoom).
-   - Booking questions: name, email and phone (make phone required), then:
-     - "What is happening, in a sentence or two?" (long text, required) with a note: "Please don't include your parent's name or health details."
-     - "How urgent is it?" (radio: This week / This month / Planning ahead)
-     - "Which city?" (radio: Oakville / Burlington / Milton / Halton Hills / Other)
-   - Limits: buffer of 15 minutes after each call, minimum notice of 4 hours, and a cap on bookings per day and per week (Limits tab).
-   - Reminders: turn on an email reminder 24 hours before.
-5. In `src/site.config.ts`, set `calLink` to `yourusername/fit-call` and push.
+The Book page shows a placeholder until you add your form.
 
-Full Cal.com, Tally and intake setup instructions come in the next step.
+1. In Tally, create a form called "Request a free fit call" with these fields:
+   - Name, email, phone (all required)
+   - "What is happening, in a sentence or two?" (long text, required). Add help text: "Please don't include your parent's name or health details."
+   - "How urgent is it?" (multiple choice: This week / This month / Planning ahead)
+   - "Which city does your parent live in?" (multiple choice: Oakville / Burlington / Milton / Halton Hills / Other)
+   - "What times suit you for a 15-minute call?" (short text)
+   - Consent checkbox (required): "I agree GuidedCare may contact me about my request, as described in the privacy policy." Link to /privacy/.
+2. Publish it, then Share > Embed. Copy the form ID (the last part of the form link, e.g. `tally.so/r/wAbC12` gives `wAbC12`).
+3. In `src/site.config.ts`, set `bookingFormId` to that ID and push. The form replaces the placeholder automatically.
+4. Change `replyTime` in the same file if "within one business day" isn't right.
+
+Every site button still says "Book a free call" and goes to /book/.
 
 ## Before showing it to anyone
 

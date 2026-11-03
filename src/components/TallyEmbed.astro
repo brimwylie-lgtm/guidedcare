@@ -1,0 +1,67 @@
+---
+// Embeds a Tally form. Until a form ID is set in site.config.ts, shows a placeholder.
+import { site } from "../site.config";
+
+interface Props {
+  formId: string;
+  title: string; // accessible name for the iframe
+  minHeight?: number; // starting height in px before Tally resizes it
+}
+const { formId, title, minHeight = 600 } = Astro.props;
+const ready = formId !== "REPLACE" && formId.trim() !== "";
+const src = `https://tally.so/embed/${formId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`;
+---
+
+{
+  ready ? (
+    <div class="tally card">
+      <iframe
+        data-tally-src={src}
+        src={src}
+        loading="lazy"
+        width="100%"
+        height={minHeight}
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title={title}
+      />
+      <script is:inline async src="https://tally.so/widgets/embed.js" />
+      <noscript>
+        <p>
+          <a href={`https://tally.so/r/${formId}`}>Open the form in a new page</a>.
+        </p>
+      </noscript>
+    </div>
+  ) : (
+    <div class="placeholder" role="note">
+      <p class="label">Tally form placeholder</p>
+      <p>
+        The fit call request form will appear here. Until then, email{" "}
+        <a href={`mailto:${site.owner.email}`}>{site.owner.email}</a> to arrange a call.
+      </p>
+    </div>
+  )
+}
+
+<style>
+  .tally { padding: var(--space-2); }
+  .tally iframe { display: block; width: 100%; border: 0; }
+  .placeholder {
+    border: 2px dashed var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: var(--space-4) var(--space-3);
+    min-height: 22rem;
+    display: grid;
+    align-content: center;
+    text-align: center;
+  }
+  .label {
+    font-weight: 700;
+    color: var(--harbour);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--step--1);
+  }
+</style>

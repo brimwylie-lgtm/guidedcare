@@ -1,7 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import BookingEmbed from "../components/BookingEmbed.astro";
+import TallyEmbed from "../components/TallyEmbed.astro";
 import { site } from "../site.config";
 
 const page = await getEntry("pages", "book");
@@ -25,20 +25,22 @@ const p = page.data;
 
       <div class="book-grid">
         <div>
-          <BookingEmbed />
+          <h2 class="form-heading">Request your fit call</h2>
+          <p>Fill in the short form and we'll reply {site.replyTime} to set a time.</p>
+          <TallyEmbed formId={site.bookingFormId} title="GuidedCare fit call request form" />
         </div>
         <div class="prose">
           {
             p.beforeCall && (
               <>
-                <h2>When you book, I'll ask three short questions</h2>
+                <h2>What the form asks</h2>
                 <ul class="checklist">
                   {p.beforeCall.map((item) => (
                     <li>{item}</li>
                   ))}
                 </ul>
                 <p class="small muted">
-                  Please don't include your parent's name or health details. The general situation is all I need.
+                  Please don't include your parent's name or health details. The general situation is all we need.
                 </p>
               </>
             )

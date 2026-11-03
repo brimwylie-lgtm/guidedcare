@@ -1,7 +1,7 @@
 ---
 import { getEntry, getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+import Headshot from "../components/Headshot.astro";
 import CallToAction from "../components/CallToAction.astro";
 import RoadmapPreview from "../components/RoadmapPreview.astro";
 import { formatPrice, priceNote } from "../site.config";
@@ -104,13 +104,13 @@ const steps = [
   </section>
 
   <section class="section" aria-labelledby="story-heading">
-    <div class="container story-grid">
+    <div class="container">
       <div class="prose">
         <h2 id="story-heading">{p.storyHeading}</h2>
+        <Headshot size={88} name="Brian" role="Founder, GuidedCare" />
         <Story />
         <p><a href="/about/">More about GuidedCare and how we work</a></p>
       </div>
-      <ImagePlaceholder alt="Photo of Brian, founder of GuidedCare" label="Photo of Brian (placeholder)" ratio="4 / 5" />
     </div>
   </section>
 
@@ -184,10 +184,9 @@ const steps = [
     margin-bottom: var(--space-1);
   }
   #roadmap-heading { margin-top: 0; }
-  .roadmap-grid, .story-grid { display: grid; gap: var(--space-4); align-items: start; }
+  .roadmap-grid { display: grid; gap: var(--space-4); align-items: start; }
   @media (min-width: 56rem) {
     .roadmap-grid { grid-template-columns: 1fr 1fr; }
-    .story-grid { grid-template-columns: 3fr 2fr; }
   }
   .roadmap-price {
     font-family: var(--font-heading);

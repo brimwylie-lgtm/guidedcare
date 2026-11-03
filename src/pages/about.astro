@@ -1,7 +1,7 @@
 ---
 import { getEntry, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+import Headshot from "../components/Headshot.astro";
 import CallToAction from "../components/CallToAction.astro";
 import { site } from "../site.config";
 
@@ -13,10 +13,11 @@ const p = page.data;
 
 <BaseLayout title={p.title} description={p.description}>
   <section class="section">
-    <div class="container about-grid">
+    <div class="container">
       <div class="prose">
         <h1>{p.heading}</h1>
         {p.intro && <p class="lead">{p.intro}</p>}
+        <Headshot size={120} name="Brian" role="Founder, GuidedCare" />
         <Content />
         <h2>Get in touch</h2>
         <p>
@@ -24,18 +25,7 @@ const p = page.data;
           <a href={`mailto:${site.owner.email}`}>{site.owner.email}</a>.
         </p>
       </div>
-      <div class="photo">
-        <ImagePlaceholder alt="Photo of Brian, founder of GuidedCare" label="Photo of Brian (placeholder)" ratio="4 / 5" />
-      </div>
     </div>
   </section>
   <CallToAction />
 </BaseLayout>
-
-<style>
-  .about-grid { display: grid; gap: var(--space-4); align-items: start; }
-  @media (min-width: 56rem) {
-    .about-grid { grid-template-columns: 3fr 2fr; }
-    .photo { position: sticky; top: var(--space-3); }
-  }
-</style>

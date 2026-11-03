@@ -1,0 +1,54 @@
+---
+// Small round headshot with an optional name line beside it.
+// Photo files live in public/images/ (200px and 400px versions for sharp screens).
+interface Props {
+  size?: number; // display size in px
+  name?: string;
+  role?: string;
+}
+const { size = 96, name, role } = Astro.props;
+---
+
+<div class="headshot">
+  <picture>
+    <source type="image/webp" srcset="/images/brian-200.webp 200w, /images/brian-400.webp 400w" sizes={`${size}px`} />
+    <img
+      src="/images/brian-200.jpg"
+      srcset="/images/brian-200.jpg 200w, /images/brian-400.jpg 400w"
+      sizes={`${size}px`}
+      width={size}
+      height={size}
+      alt="Brian, founder of GuidedCare"
+      loading="lazy"
+      decoding="async"
+      style={`width:${size}px;height:${size}px`}
+    />
+  </picture>
+  {
+    name && (
+      <p class="who">
+        <strong>{name}</strong>
+        {role && <span class="muted">{role}</span>}
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .headshot {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 var(--space-3);
+  }
+  img {
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--surface);
+    box-shadow: 0 0 0 1px var(--line);
+    flex: none;
+  }
+  .who { margin: 0; line-height: 1.35; }
+  .who strong, .who span { display: block; }
+</style>
